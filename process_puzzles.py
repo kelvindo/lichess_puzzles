@@ -1,15 +1,8 @@
 import csv
 import chess.pgn
 import random
-import requests
 from dataclasses import dataclass
 from typing import Dict, List, Tuple, Optional
-
-LICHESS_ACCESS_TOKEN = ""
-LICHESS_STUDY_ID = ""
-LICHESS_IMPORT_STUDY_URL = (
-    f"https://lichess.org/api/study/{LICHESS_STUDY_ID}/import-pgn"
-)
 
 
 @dataclass
@@ -156,33 +149,6 @@ class Puzzle:
 
         node = game.add_variation(chess.Move.from_uci(self.moves[0]))
         return node.board().fen()
-
-
-def upload_puzzle(puzzle: Puzzle, fen: str, index: int):
-    if "w" in fen:
-        orientation = "white"
-    else:
-        orientation = "black"
-
-    print(
-        f'[FEN "{fen}"]\n[SITE "https://lichess.org/training/{puzzle.puzzle_id}"]\n[WHITEELO "{puzzle.rating}"]\n\n*\n'
-    )
-
-    # import_params = {
-    #     "name": f"Puzzle {index+1}",
-    #     "pgn": f'[FEN "{fen}"]\n[SITE "https://lichess.org/training/{puzzle.puzzle_id}"]\n[WHITEELO "{puzzle.rating}"]',
-    #     "orientation": orientation,
-    #     "variant": "standard",
-    # }
-
-    # response = requests.post(
-    #     LICHESS_IMPORT_STUDY_URL,
-    #     data=import_params,
-    #     headers={f"Authorization": f"Bearer {LICHESS_ACCESS_TOKEN}"},
-    # )
-
-    # if response.status_code != 200:
-    #     print(f"Failed to import PGN. Status code: {response}")
 
 
 def generate_puzzle_pack_pgn_strings(
