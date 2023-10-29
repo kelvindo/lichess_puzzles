@@ -24,4 +24,4 @@ pgn_strings = puzzle_generator.generate_puzzle_pack_pgn_strings(
     puzzle_pack, num_puzzles
 )
 
-st.text_area("PGNs", "".join(pgn_strings), height=1000, key="pgn_text_area")
+st.text_area("PGNs", "".join(pgn_strings), height=320, key="pgn_text_area")
