@@ -180,10 +180,6 @@ def generate_puzzle_pack_pgn_file(
             f.write(pgn)
 
 
-def coin_flip() -> bool:
-    return random.random() > 0.5
-
-
 def main():
     parser = argparse.ArgumentParser(
         description="Parser for lichess puzzle processing."

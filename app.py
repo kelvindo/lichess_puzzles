@@ -1,12 +1,6 @@
 import streamlit as st
 
-from generate_puzzles import (
-    PuzzleGenerator,
-    PUZZLES_OPENING,
-    PUZZLES_MIDDLEGAME,
-    PUZZLES_ENDGAME,
-    PUZZLES_MIXED,
-)
+from generate_puzzles import PuzzleGenerator
 
 
 @st.cache_resource
@@ -16,8 +10,10 @@ def get_puzzle_generator():
 
 puzzle_generator = get_puzzle_generator()
 puzzle_pack = st.selectbox(
-    "Puzzle Pack", [PUZZLES_OPENING, PUZZLES_MIDDLEGAME, PUZZLES_ENDGAME, PUZZLES_MIXED]
+    "Puzzle Pack",
+    puzzle_generator.get_puzzle_pack_names(),
 )
+
 num_puzzles = st.slider("Number of Puzzles", 1, 32, 4)
 
 pgn_strings = puzzle_generator.generate_puzzle_pack_pgn_strings(
