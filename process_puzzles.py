@@ -184,21 +184,6 @@ def coin_flip() -> bool:
     return random.random() > 0.5
 
 
-def generate_study(input_file: str, num_puzzles: int):
-    puzzles: List[Puzzle] = []
-    with open(input_file, "r") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            puzzle = Puzzle.from_dict(row)
-            puzzles.append(puzzle)
-
-    random_puzzles = random.sample(puzzles, num_puzzles)
-
-    for i, puzzle in enumerate(random_puzzles):
-        fen = puzzle.generate_puzzle_position(coin_flip())
-        upload_puzzle(puzzle, fen, i)
-
-
 def main():
     parser = argparse.ArgumentParser(
         description="Parser for lichess puzzle processing."
