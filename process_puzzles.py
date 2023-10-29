@@ -3,6 +3,7 @@ import chess.pgn
 import random
 from dataclasses import dataclass
 from typing import Dict, List, Tuple, Optional
+import argparse
 
 
 @dataclass
@@ -19,7 +20,7 @@ PUZZLE_INPUT_FILE = "lichess_db_puzzle.csv"
 PUZZLE_FILTER_MAPPING: Dict[str, PuzzleFilter] = {
     "opening": PuzzleFilter(
         min_rating=750,
-        max_rating=1500,
+        max_rating=2000,
         min_popularity=75,
         min_plays=1000,
         puzzle_theme_tag="opening",
@@ -27,7 +28,7 @@ PUZZLE_FILTER_MAPPING: Dict[str, PuzzleFilter] = {
     ),
     "middlegame": PuzzleFilter(
         min_rating=750,
-        max_rating=1500,
+        max_rating=2000,
         min_popularity=75,
         min_plays=10000,
         puzzle_theme_tag="middlegame",
@@ -35,19 +36,19 @@ PUZZLE_FILTER_MAPPING: Dict[str, PuzzleFilter] = {
     ),
     "endgame": PuzzleFilter(
         min_rating=750,
-        max_rating=1500,
+        max_rating=2000,
         min_popularity=75,
         min_plays=10000,
         puzzle_theme_tag="endgame",
         puzzle_opening_tag=None,
     ),
-    "kings_indian": PuzzleFilter(
+    "opening_tag": PuzzleFilter(
         min_rating=500,
-        max_rating=2000,
-        min_popularity=50,
-        min_plays=100,
+        max_rating=2500,
+        min_popularity=25,
+        min_plays=10,
         puzzle_theme_tag="opening",
-        puzzle_opening_tag="kings_indian",
+        puzzle_opening_tag=None,
     ),
 }
 
@@ -199,11 +200,40 @@ def generate_study(input_file: str, num_puzzles: int):
 
 
 def main():
-    # filter_puzzles()
-    # generate_study("puzzles/endgame.csv", 25)
-    generate_puzzle_pack_pgn_file(
-        "puzzles/middlegame.csv", "puzzle_packs/middlegames_2.pgn"
+    parser = argparse.ArgumentParser(
+        description="Parser for lichess puzzle processing."
     )
+
+    parser.add_argument(
+        "command",
+        type=str,
+        help="Command to run. Options: filter, generate",
+    )
+
+    parser.add_argument(
+        "--puzzle-type",
+        type=str,
+        default="middlegame",
+        help="Type of puzzle to generate",
+    )
+
+    parser.add_argument(
+        "--num-puzzles",
+        type=int,
+        default=32,
+        help="Number of puzzles to generate",
+    )
+
+    args = parser.parse_args()
+    command = args.command
+
+    if command == "filter":
+        filter_puzzles()
+
+    elif command == "generate":
+        generate_puzzle_pack_pgn_file(
+            "puzzles/middlegame.csv", "puzzle_packs/middlegames_2.pgn"
+        )
 
 
 if __name__ == "__main__":
