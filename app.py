@@ -14,10 +14,14 @@ puzzle_pack = st.selectbox(
     puzzle_generator.get_puzzle_pack_names(),
 )
 
-num_puzzles = st.slider("Number of Puzzles", 1, 32, 4)
+num_puzzles = st.slider("Number of Puzzles", min_value=1, max_value=32, value=4)
+
+target_elo = st.slider("Target Puzzle ELO", min_value=500, max_value=2000, value=1250)
 
 pgn_strings = puzzle_generator.generate_puzzle_pack_pgn_strings(
-    puzzle_pack, num_puzzles
+    puzzle_pack,
+    num_puzzles,
+    target_elo,
 )
 
 st.text_area("PGNs", "".join(pgn_strings), height=320, key="pgn_text_area")

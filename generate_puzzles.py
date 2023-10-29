@@ -93,7 +93,8 @@ class PuzzleGenerator:
     def generate_puzzle_pack_pgn_strings(
         self,
         puzzle_pack_name: str,
-        num_puzzles: int = 32,
+        num_puzzles: int,
+        target_elo: int,
     ) -> List[str]:
         pgn_strings = []
         puzzles = []
