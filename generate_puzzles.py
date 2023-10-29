@@ -15,7 +15,7 @@ PUZZLE_FILES = {
     PUZZLES_ENDGAME: "puzzles/endgame.csv",
 }
 
-NUM_OPENINGS = 64
+NUM_OPENINGS = 256
 
 
 def coin_flip() -> bool:

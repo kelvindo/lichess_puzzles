@@ -21,3 +21,7 @@ pgn_strings = puzzle_generator.generate_puzzle_pack_pgn_strings(
 )
 
 st.text_area("PGNs", "".join(pgn_strings), height=320, key="pgn_text_area")
+
+st.caption(
+    "Copy the PGNs above, go to a Lichess study, add chapter, paste the PGNs, and choose 'Orientation: Automatic'"
+)
