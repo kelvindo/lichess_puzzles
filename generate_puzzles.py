@@ -16,6 +16,7 @@ PUZZLE_FILES = {
 }
 
 NUM_OPENINGS = 256
+RATING_SAMPLE_SIZE = 1000
 
 
 def coin_flip() -> bool:
@@ -94,7 +95,7 @@ class PuzzleGenerator:
         self,
         puzzle_pack_name: str,
         num_puzzles: int,
-        target_elo: int,
+        target_rating: int,
     ) -> List[str]:
         pgn_strings = []
         puzzles = []
@@ -105,7 +106,9 @@ class PuzzleGenerator:
         else:
             return ["Invalid puzzle pack name."]
 
-        for puzzle in random.sample(puzzles, num_puzzles):
+        puzzles = target_puzzles_by_rating(puzzles, target_rating)
+
+        for puzzle in random.sample(puzzles, min(len(puzzles), num_puzzles)):
             fen = puzzle.generate_puzzle_position(coin_flip())
             pgn_strings.append(
                 f'[FEN "{fen}"]\n[SITE "https://lichess.org/training/{puzzle.puzzle_id}"]\n\n*\n\n'
@@ -115,3 +118,13 @@ class PuzzleGenerator:
 
 def convert_to_display(opening: str) -> str:
     return " ".join([word.capitalize() for word in opening.split("_")])
+
+def target_puzzles_by_rating(puzzles: List[Puzzle], target_rating: int):
+    min_rating = target_rating - 100
+    max_rating = target_rating + 100
+    filtered_puzzles = [puzzle for puzzle in puzzles if puzzle.rating >= min_rating and puzzle.rating <= max_rating]
+
+    if len(filtered_puzzles) >= RATING_SAMPLE_SIZE:
+        return filtered_puzzles
+
+    return sorted(puzzles, key=lambda x: abs(x.rating - target_rating))[:RATING_SAMPLE_SIZE]
