@@ -1,7 +1,7 @@
 import csv
 import random
 from process_puzzles import Puzzle
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 
 PUZZLES_OPENING = "Opening"
@@ -115,16 +115,47 @@ class PuzzleGenerator:
             )
         return pgn_strings
 
+    def generate_puzzle_fen_string(
+        self,
+        puzzle_pack_name: str,
+        target_rating: int,
+    ) -> Tuple[str, str]:
+        puzzles = []
+        if puzzle_pack_name in self.puzzle_mapping:
+            puzzles = self.puzzle_mapping[puzzle_pack_name]
+        elif puzzle_pack_name in self.opening_puzzle_mapping:
+            puzzles = self.opening_puzzle_mapping[puzzle_pack_name]
+        else:
+            return ["Invalid puzzle pack name."]
+
+        puzzles = target_puzzles_by_rating(puzzles, target_rating)
+
+        puzzle = random.choice(puzzles)
+        fen = puzzle.generate_puzzle_position(coin_flip())
+        return fen, convert_to_analysis_url(fen)
+
 
 def convert_to_display(opening: str) -> str:
     return " ".join([word.capitalize() for word in opening.split("_")])
 
+
+def convert_to_analysis_url(fen: str) -> str:
+    normalized_fen = fen.replace(" ", "_")
+    return f"https://lichess.org/analysis/{normalized_fen}"
+
+
 def target_puzzles_by_rating(puzzles: List[Puzzle], target_rating: int):
     min_rating = target_rating - 100
     max_rating = target_rating + 100
-    filtered_puzzles = [puzzle for puzzle in puzzles if puzzle.rating >= min_rating and puzzle.rating <= max_rating]
+    filtered_puzzles = [
+        puzzle
+        for puzzle in puzzles
+        if puzzle.rating >= min_rating and puzzle.rating <= max_rating
+    ]
 
     if len(filtered_puzzles) >= RATING_SAMPLE_SIZE:
         return filtered_puzzles
 
-    return sorted(puzzles, key=lambda x: abs(x.rating - target_rating))[:RATING_SAMPLE_SIZE]
+    return sorted(puzzles, key=lambda x: abs(x.rating - target_rating))[
+        :RATING_SAMPLE_SIZE
+    ]
