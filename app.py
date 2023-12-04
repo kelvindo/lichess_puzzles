@@ -41,19 +41,22 @@ fen, analysis_url = puzzle_generator.generate_puzzle_fen_string(
 #     "Copy the PGNs above, go to a Lichess study, add chapter, paste the PGNs, and choose 'Orientation: Automatic'"
 # )
 
-flipped = "w" not in fen
-board = chess.Board(fen)
-board_image = chess.svg.board(
-    board,
-    size=600,
-    flipped=flipped,
-    borders=False,
-    colors={
-        "square light": "#f0d9b5",
-        "square dark": "#b58863",
-    },
-)
-st.image(image=board_image)
+# flipped = "w" not in fen
+# board = chess.Board(fen)
+# board_image = chess.svg.board(
+#     board,
+#     size=600,
+#     flipped=flipped,
+#     borders=False,
+#     colors={
+#         "square light": "#f0d9b5",
+#         "square dark": "#b58863",
+#     },
+# )
+# st.image(image=board_image)
+
+src = f"https://lichess.org/analysis/fromPosition/{fen}"
+st.components.v1.iframe(src, width=800, height=450, scrolling=True)
 
 col1, col2 = st.columns([1, 7])
 
