@@ -55,8 +55,7 @@ fen, analysis_url = puzzle_generator.generate_puzzle_fen_string(
 # )
 # st.image(image=board_image)
 
-src = f"https://lichess.org/analysis/fromPosition/{fen}"
-st.components.v1.iframe(src, width=800, height=450, scrolling=True)
+st.components.v1.iframe(analysis_url, width=350, height=625, scrolling=True)
 
 col1, col2 = st.columns([1, 7])
 
