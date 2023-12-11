@@ -25,7 +25,7 @@ MIN_PUZZLES_FOR_STRUCTURE = 5
 RATING_SAMPLE_SIZE = 1000
 
 LICHESS_USERNAME = "trisolaran3"
-LICHESS_LAST_N_GAMES = 5
+LICHESS_LAST_N_GAMES = 10
 
 
 def coin_flip() -> bool:
@@ -178,8 +178,10 @@ class PuzzleGenerator:
         puzzles = []
         if puzzle_pack_name in self.puzzle_mapping:
             puzzles = self.puzzle_mapping[puzzle_pack_name]
-        elif puzzle_pack_name in self.opening_puzzles_by_name:
-            puzzles = self.opening_puzzles_by_name[puzzle_pack_name]
+        # elif puzzle_pack_name in self.opening_puzzles_by_name:
+        #     puzzles = self.opening_puzzles_by_name[puzzle_pack_name]
+        elif puzzle_pack_name == PUZZLES_PERSONALIZED:
+            puzzles = self.get_personalized_puzzles()
         else:
             return ["Invalid puzzle pack name."]
 
