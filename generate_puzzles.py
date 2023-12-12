@@ -157,10 +157,8 @@ class PuzzleGenerator:
             )
         return pgn_strings
 
-    def get_personalized_puzzles(self) -> List[Puzzle]:
-        structures = get_structure_sets_from_lichess(
-            LICHESS_USERNAME, LICHESS_LAST_N_GAMES
-        )
+    def get_personalized_puzzles(self, username: str) -> List[Puzzle]:
+        structures = get_structure_sets_from_lichess(username, LICHESS_LAST_N_GAMES)
 
         puzzles: List[Puzzle] = []
         for structure in structures:
@@ -174,6 +172,7 @@ class PuzzleGenerator:
         self,
         puzzle_pack_name: str,
         target_rating: int,
+        username: str = "trisolaran3",
     ) -> Tuple[str, str]:
         puzzles = []
         if puzzle_pack_name in self.puzzle_mapping:
@@ -181,7 +180,7 @@ class PuzzleGenerator:
         # elif puzzle_pack_name in self.opening_puzzles_by_name:
         #     puzzles = self.opening_puzzles_by_name[puzzle_pack_name]
         elif puzzle_pack_name == PUZZLES_PERSONALIZED:
-            puzzles = self.get_personalized_puzzles()
+            puzzles = self.get_personalized_puzzles(username)
         else:
             return ["Invalid puzzle pack name."]
 
@@ -269,9 +268,9 @@ def pawns_only_fen(fen):
     return "/".join(new_layout)
 
 
-def get_structure_sets_from_lichess(username: str, limit: int) -> List[str]:
+def get_structure_sets_from_lichess(username: str, num_games: int) -> List[str]:
     structures = set()
-    pgns = lichess.api.user_games(username, max=limit, format=PGN)
+    pgns = lichess.api.user_games(username, max=num_games, format=PGN)
     for pgn in pgns:
         structures.update(get_structure_sets_from_pgn(pgn))
     return structures
