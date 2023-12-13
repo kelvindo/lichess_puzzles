@@ -12,7 +12,8 @@ PUZZLES_OPENING = "Opening"
 PUZZLES_MIDDLEGAME = "Middlegame"
 PUZZLES_ENDGAME = "Endgame"
 PUZZLES_RANDOM = "Random"
-PUZZLES_PERSONALIZED = "Personalized"
+PUZZLES_OPENINGS_BY_NAME = "Openings by Name"
+PUZZLES_OPENINGS_BY_USER = "Openings by User"
 
 PUZZLE_FILES = {
     PUZZLES_OPENING: "puzzles/opening.csv",
@@ -35,7 +36,7 @@ def coin_flip() -> bool:
 class PuzzleGenerator:
     def __init__(self):
         self.puzzle_mapping = self.load_puzzles()
-        # self.opening_puzzles_by_name = self.load_opening_puzzles_by_name()
+        self.opening_puzzles_by_name = self.load_opening_puzzles_by_name()
         self.opening_puzzles_by_structure = self.load_opening_puzzles_by_structure()
 
     def load_puzzles(self) -> Dict[str, List[Puzzle]]:
@@ -127,11 +128,15 @@ class PuzzleGenerator:
             PUZZLES_OPENING,
             PUZZLES_MIDDLEGAME,
             PUZZLES_ENDGAME,
-            PUZZLES_PERSONALIZED,
+            PUZZLES_OPENINGS_BY_NAME,
+            PUZZLES_OPENINGS_BY_USER,
         ]
 
         # puzzle_packs.extend(self.opening_puzzles_by_name.keys())
         return puzzle_packs
+
+    def get_opening_names(self) -> List[str]:
+        return self.load_opening_puzzles_by_name().keys()
 
     def generate_puzzle_pack_pgn_strings(
         self,
@@ -172,14 +177,15 @@ class PuzzleGenerator:
         self,
         puzzle_pack_name: str,
         target_rating: int,
-        username: str = "trisolaran3",
+        opening_name: str,
+        username: str,
     ) -> Tuple[str, str]:
         puzzles = []
         if puzzle_pack_name in self.puzzle_mapping:
             puzzles = self.puzzle_mapping[puzzle_pack_name]
-        # elif puzzle_pack_name in self.opening_puzzles_by_name:
-        #     puzzles = self.opening_puzzles_by_name[puzzle_pack_name]
-        elif puzzle_pack_name == PUZZLES_PERSONALIZED:
+        elif puzzle_pack_name == PUZZLES_OPENINGS_BY_NAME:
+            puzzles = self.opening_puzzles_by_name[opening_name]
+        elif puzzle_pack_name == PUZZLES_OPENINGS_BY_USER:
             puzzles = self.get_personalized_puzzles(username)
         else:
             return ["Invalid puzzle pack name."]

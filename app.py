@@ -1,9 +1,14 @@
 import streamlit as st
-from generate_puzzles import PuzzleGenerator
+from generate_puzzles import (
+    PuzzleGenerator,
+    PUZZLES_OPENINGS_BY_NAME,
+    PUZZLES_OPENINGS_BY_USER,
+)
 
 import chess
 
 DEFAULT_USERNAME = "trisolaran3"
+DEFAULT_OPENING = "French Defense"
 
 
 @st.cache_resource
@@ -17,22 +22,21 @@ puzzle_pack = st.selectbox(
     "Puzzle Pack",
     puzzle_generator.get_puzzle_pack_names(),
 )
+opening_name = ""
+if puzzle_pack == PUZZLES_OPENINGS_BY_NAME:
+    opening_name = st.selectbox("Opening Name", puzzle_generator.get_opening_names())
 
-username = st.text_input("Lichess Username", DEFAULT_USERNAME)
+username = ""
+if puzzle_pack == PUZZLES_OPENINGS_BY_USER:
+    username = st.text_input("Lichess Username", DEFAULT_USERNAME)
 
 fen, analysis_url = puzzle_generator.generate_puzzle_fen_string(
     puzzle_pack_name=puzzle_pack,
     target_rating=1400,
+    opening_name=opening_name,
     username=username,
 )
 
 st.components.v1.iframe(analysis_url, width=370, height=515, scrolling=False)
 
-
-col1, col2 = st.columns([1, 1])
-
-with col1:
-    st.link_button("Analyze", analysis_url)
-
-with col2:
-    st.button("Next Puzzle")
+st.button("Next Puzzle")
