@@ -7,9 +7,9 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    width: 100%;
     margin: 0 auto;
-    padding: 20px;
+    padding: 2px;
     text-align: center;
 }
 
@@ -19,12 +19,20 @@ h1 {
     font-size: 2.5em;
 }
 
+#puzzle-container {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    transform: scale(1.5);
+    transform-origin: center top;
+}
 
 #puzzle-frame {
     width: 600px;
     height: 775px;
     border: none;
-    margin: 20px 0;
+    margin: 2px 0;
 }
 
 

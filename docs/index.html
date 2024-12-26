@@ -9,12 +9,13 @@
         <h1>2D Tactics</h1>
         <div id="puzzle-container">
             <iframe id="puzzle-frame" scrolling="no"></iframe>
+            <div class="controls">
+                <button class="button" id="prevButton" onclick="previousPuzzle()">Previous</button>
+                <div id="puzzle-counter">Puzzle 1 of 10</div>
+                <button class="button" id="nextButton" onclick="nextPuzzle()">Next</button>
+            </div>
         </div>
-        <div class="controls">
-            <button class="button" id="prevButton" onclick="previousPuzzle()">Previous</button>
-            <div id="puzzle-counter">Puzzle 1 of 10</div>
-            <button class="button" id="nextButton" onclick="nextPuzzle()">Next</button>
-        </div>
+        
     </div>
     <script src="script.js"></script>
 </body>
