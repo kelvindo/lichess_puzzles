@@ -24,8 +24,19 @@ h1 {
     align-items: center;
     width: 100%;
     margin: 0 auto;
-    transform: scale(1.5);
-    transform-origin: center top;
+    transform: scale(1.0);
+    transform-origin: top center;
+}
+
+/* Mobile devices */
+@media screen and (max-width: 1080px) {
+    #puzzle-container {
+        transform: scale(1.5);
+    }
+    
+    .controls {
+        margin-top: 200px;
+    }
 }
 
 #puzzle-frame {
