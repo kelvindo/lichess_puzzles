@@ -19,40 +19,20 @@ h1 {
     font-size: 2.5em;
 }
 
-#puzzle-container {
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin: 0 auto;
-    transform: scale(1.0);
-    transform-origin: top center;
-}
-
-/* Mobile devices */
-@media screen and (max-width: 1080px) {
-    #puzzle-container {
-        transform: scale(1.5);
-    }
-    
-    .controls {
-        margin-top: 200px;
-    }
-}
 
 #puzzle-frame {
     width: 600px;
     height: 775px;
     border: none;
-    margin: 2px 0;
+    margin: 20x;
 }
 
 
 .controls {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
-    margin-top: 20px;
 }
 
 .button {
