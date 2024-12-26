@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chess Puzzles</title>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        #puzzle-frame {
+            width: 370px;
+            height: 515px;
+            border: none;
+        }
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Chess Puzzles</h1>
+        <div id="puzzle-container">
+            <iframe id="puzzle-frame" scrolling="no"></iframe>
+        </div>
+        <button class="button" onclick="nextPuzzle()">Next Puzzle</button>
+    </div>
+
+    <script>
+        let puzzles = [];
+        let currentPuzzleIndex = 0;
+
+        async function loadPuzzles() {
+            try {
+                const response = await fetch('static_puzzles/puzzles.csv');
+                const csvText = await response.text();
+                
+                // Parse CSV
+                const lines = csvText.split('\n');
+                const headers = lines[0].split(',');
+                
+                // Convert CSV to array of objects
+                puzzles = lines.slice(1).filter(line => line.trim()).map(line => {
+                    const values = line.split(',');
+                    const puzzle = {};
+                    headers.forEach((header, index) => {
+                        puzzle[header.trim()] = values[index]?.trim();
+                    });
+                    return puzzle;
+                });
+
+                // Show first puzzle
+                showPuzzle();
+            } catch (error) {
+                console.error('Error loading puzzles:', error);
+            }
+        }
+
+        function showPuzzle() {
+            if (puzzles.length === 0) return;
+            
+            const puzzle = puzzles[currentPuzzleIndex];
+            const frame = document.getElementById('puzzle-frame');
+            
+            // Assuming your CSV has a column named 'analysis_url'
+            if (puzzle.analysis_url) {
+                frame.src = puzzle.analysis_url;
+            }
+        }
+
+        function nextPuzzle() {
+            currentPuzzleIndex = (currentPuzzleIndex + 1) % puzzles.length;
+            showPuzzle();
+        }
+
+        // Load puzzles when page loads
+        loadPuzzles();
+    </script>
+</body>
+</html> 

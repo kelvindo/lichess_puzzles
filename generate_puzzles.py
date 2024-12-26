@@ -4,8 +4,7 @@ import io
 import chess.pgn
 from process_puzzles import Puzzle
 from typing import Dict, List, Tuple
-import lichess.api
-from lichess.format import PGN
+import lichess
 
 
 PUZZLES_OPENING = "Opening"
