@@ -1,6 +1,7 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f5f5f5;
+    background-color: #1a1a1a;
+    color: #ffffff;
     margin: 0;
     padding: 0;
 }
@@ -13,23 +14,16 @@ body {
 }
 
 h1 {
-    color: #2c3e50;
+    color: #ffffff;
     margin-bottom: 30px;
     font-size: 2.5em;
-}
-
-#puzzle-container {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
 }
 
 #puzzle-frame {
     width: 370px;
     height: 515px;
     border: none;
+    margin: 20px 0;
 }
 
 .controls {
@@ -60,15 +54,14 @@ h1 {
 }
 
 .button:disabled {
-    background-color: #bdc3c7;
+    background-color: #4a4a4a;
     cursor: not-allowed;
 }
 
 #puzzle-counter {
     font-size: 1.2em;
-    color: #2c3e50;
+    color: #ffffff;
     padding: 10px 20px;
-    background-color: white;
+    background-color: #2c2c2c;
     border-radius: 6px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 } 
