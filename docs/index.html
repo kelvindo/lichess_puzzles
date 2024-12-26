@@ -115,7 +115,13 @@
                     return puzzle;
                 });
 
-                // Show first puzzle
+                // Load last position from localStorage
+                const savedIndex = localStorage.getItem('currentPuzzleIndex');
+                if (savedIndex !== null) {
+                    currentPuzzleIndex = parseInt(savedIndex);
+                }
+
+                // Show puzzle and update controls
                 showPuzzle();
                 updateControls();
             } catch (error) {
@@ -136,6 +142,9 @@
             // Update puzzle counter
             document.getElementById('puzzle-counter').textContent = 
                 `Puzzle ${currentPuzzleIndex + 1} of ${puzzles.length}`;
+                
+            // Save current position to localStorage
+            localStorage.setItem('currentPuzzleIndex', currentPuzzleIndex);
         }
 
         function updateControls() {
