@@ -19,12 +19,14 @@ h1 {
     font-size: 2.5em;
 }
 
+
 #puzzle-frame {
-    width: 370px;
-    height: 515px;
+    width: 600px;
+    height: 775px;
     border: none;
     margin: 20px 0;
 }
+
 
 .controls {
     display: flex;
