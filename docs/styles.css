@@ -22,7 +22,6 @@ h1 {
 
 #puzzle-frame {
     width: 600px;
-    height: 775px;
     border: none;
     margin: 20x;
 }
@@ -36,7 +35,7 @@ h1 {
 }
 
 .button {
-    background-color: #3498db;
+    background-color: #2ecc71;
     border: none;
     color: white;
     padding: 12px 24px;
@@ -51,7 +50,7 @@ h1 {
 }
 
 .button:hover {
-    background-color: #2980b9;
+    background-color: #27ae60;
 }
 
 .button:disabled {
