@@ -15,13 +15,14 @@ body {
 
 h1 {
     color: #ffffff;
-    margin-bottom: 30px;
+    margin: 10px;
     font-size: 2.5em;
 }
 
 
 #puzzle-frame {
     width: 600px;
+    height: 535px;
     border: none;
     margin: 20x;
 }
