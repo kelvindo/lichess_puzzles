@@ -1,5 +1,6 @@
 let puzzles = [];
 let currentPuzzleIndex = 0;
+const storageKey = `currentPuzzleIndex_${PUZZLE_PACK}`;
 
 async function loadPuzzles() {
     try {
@@ -20,8 +21,8 @@ async function loadPuzzles() {
             return puzzle;
         });
 
-        // Load last position from localStorage
-        const savedIndex = localStorage.getItem('currentPuzzleIndex');
+        // Load last position from localStorage using pack-specific key
+        const savedIndex = localStorage.getItem(storageKey);
         if (savedIndex !== null) {
             currentPuzzleIndex = parseInt(savedIndex);
         }
@@ -48,8 +49,8 @@ function showPuzzle() {
     document.getElementById('puzzle-counter').textContent = 
         `Puzzle ${currentPuzzleIndex + 1} of ${puzzles.length}`;
         
-    // Save current position to localStorage
-    localStorage.setItem('currentPuzzleIndex', currentPuzzleIndex);
+    // Save current position to localStorage using pack-specific key
+    localStorage.setItem(storageKey, currentPuzzleIndex);
 }
 
 function updateControls() {
