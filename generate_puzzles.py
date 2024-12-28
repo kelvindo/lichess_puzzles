@@ -35,8 +35,8 @@ def coin_flip() -> bool:
 class PuzzleGenerator:
     def __init__(self):
         self.puzzle_mapping = self.load_puzzles()
-        self.opening_puzzles_by_name = self.load_opening_puzzles_by_name()
-        self.opening_puzzles_by_structure = self.load_opening_puzzles_by_structure()
+        # self.opening_puzzles_by_name = self.load_opening_puzzles_by_name()
+        # self.opening_puzzles_by_structure = self.load_opening_puzzles_by_structure()
 
     def load_puzzles(self) -> Dict[str, List[Puzzle]]:
         puzzle_mapping: Dict[str, List[Puzzle]] = {
@@ -137,29 +137,53 @@ class PuzzleGenerator:
     def get_opening_names(self) -> List[str]:
         return self.load_opening_puzzles_by_name().keys()
 
-    def generate_puzzle_pack_pgn_strings(
+    def _get_puzzles_for_pack(
         self,
         puzzle_pack_name: str,
-        num_puzzles: int,
         target_rating: int,
-    ) -> List[str]:
-        pgn_strings = []
+        opening_name: str,
+        username: str,
+    ) -> List[Puzzle]:
         puzzles = []
         if puzzle_pack_name in self.puzzle_mapping:
             puzzles = self.puzzle_mapping[puzzle_pack_name]
-        elif puzzle_pack_name in self.opening_puzzles_by_name:
-            puzzles = self.opening_puzzles_by_name[puzzle_pack_name]
+        elif puzzle_pack_name == PUZZLES_OPENINGS_BY_NAME:
+            puzzles = self.opening_puzzles_by_name[opening_name]
+        elif puzzle_pack_name == PUZZLES_OPENINGS_BY_USER:
+            puzzles = self.get_personalized_puzzles(username)
         else:
-            return ["Invalid puzzle pack name."]
+            raise ValueError("Invalid puzzle pack name")
+        
+        return target_puzzles_by_rating(puzzles, target_rating)
 
-        puzzles = target_puzzles_by_rating(puzzles, target_rating)
+    def generate_puzzle_fen_string(
+        self,
+        puzzle_pack_name: str,
+        target_rating: int,
+        opening_name: str,
+        username: str,
+    ) -> Tuple[str, str]:
+        puzzles = self._get_puzzles_for_pack(puzzle_pack_name, target_rating, opening_name, username)
+        puzzle = random.choice(puzzles)
+        is_defensive = coin_flip()
+        fen = puzzle.generate_puzzle_position(is_defensive)
+        return fen, convert_to_analysis_url(fen)
 
-        for puzzle in random.sample(puzzles, min(len(puzzles), num_puzzles)):
-            fen = puzzle.generate_puzzle_position(coin_flip())
-            pgn_strings.append(
-                f'[FEN "{fen}"]\n[SITE "https://lichess.org/training/{puzzle.puzzle_id}"]\n\n*\n\n'
-            )
-        return pgn_strings
+    def generate_puzzle_fen_strings(
+        self,
+        puzzle_pack_name: str,
+        target_rating: int,
+        opening_name: str,
+        username: str,
+    ) -> Tuple[Tuple[str, str], Tuple[str, str]]:
+        puzzles = self._get_puzzles_for_pack(puzzle_pack_name, target_rating, opening_name, username)
+        puzzle = random.choice(puzzles)
+        offensive_fen = puzzle.generate_puzzle_position(False)
+        defensive_fen = puzzle.generate_puzzle_position(True)
+        return (
+            (offensive_fen, convert_to_analysis_url(offensive_fen)),
+            (defensive_fen, convert_to_analysis_url(defensive_fen))
+        )
 
     def get_personalized_puzzles(self, username: str) -> List[Puzzle]:
         structures = get_structure_sets_from_lichess(username, LICHESS_LAST_N_GAMES)
@@ -171,29 +195,6 @@ class PuzzleGenerator:
                 puzzles.extend(matching_puzzles)
 
         return puzzles
-
-    def generate_puzzle_fen_string(
-        self,
-        puzzle_pack_name: str,
-        target_rating: int,
-        opening_name: str,
-        username: str,
-    ) -> Tuple[str, str]:
-        puzzles = []
-        if puzzle_pack_name in self.puzzle_mapping:
-            puzzles = self.puzzle_mapping[puzzle_pack_name]
-        elif puzzle_pack_name == PUZZLES_OPENINGS_BY_NAME:
-            puzzles = self.opening_puzzles_by_name[opening_name]
-        elif puzzle_pack_name == PUZZLES_OPENINGS_BY_USER:
-            puzzles = self.get_personalized_puzzles(username)
-        else:
-            return ["Invalid puzzle pack name."]
-
-        puzzles = target_puzzles_by_rating(puzzles, target_rating)
-
-        puzzle = random.choice(puzzles)
-        fen = puzzle.generate_puzzle_position(coin_flip())
-        return fen, convert_to_analysis_url(fen)
 
 
 def convert_to_display(opening: str) -> str:
