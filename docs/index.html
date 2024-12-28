@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Chess Puzzles</title>
+    <title>2D Tactics - Puzzle Packs</title>
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <h1>2D Tactics</h1>
-        <div id="puzzle-container">
-            <iframe id="puzzle-frame" scrolling="no" style="aspect-ratio: 9/16; width: 100%;"></iframe>
+        <div class="puzzle-packs">
+            <h2>Choose a Puzzle Pack</h2>
+            <div class="pack-grid">
+                <a href="packs/opening.html" class="pack-card">
+                    <h3>Opening Tactics</h3>
+                    <p>ELO 800-1600</p>
+                    <span class="puzzle-count">50 puzzles</span>
+                </a>
+                <a href="packs/random.html" class="pack-card">
+                    <h3>Random Tactics</h3>
+                    <p>ELO 800-1600</p>
+                    <span class="puzzle-count">50 puzzles</span>
+                </a>
+            </div>
         </div>
-        <div class="controls">
-            <button class="button" id="prevButton" onclick="previousPuzzle()">Previous</button>
-            <div id="puzzle-counter">Puzzle 1 of 10</div>
-            <button class="button" id="nextButton" onclick="nextPuzzle()">Next</button>
-        </div> 
     </div>
-    <script src="script.js"></script>
 </body>
 </html> 

@@ -3,7 +3,7 @@ let currentPuzzleIndex = 0;
 
 async function loadPuzzles() {
     try {
-        const response = await fetch('static_puzzles/puzzles.csv');
+        const response = await fetch(`../static_puzzles/${PUZZLE_PACK}`);
         const csvText = await response.text();
         
         // Parse CSV

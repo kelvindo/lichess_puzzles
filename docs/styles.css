@@ -65,4 +65,46 @@ h1 {
     padding: 10px 20px;
     background-color: #2c2c2c;
     border-radius: 6px;
+}
+
+.puzzle-packs {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.pack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.pack-card {
+    background-color: #2c2c2c;
+    border-radius: 10px;
+    padding: 20px;
+    text-decoration: none;
+    color: #ffffff;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.pack-card:hover {
+    transform: translateY(-5px);
+    background-color: #3c3c3c;
+}
+
+.pack-card h3 {
+    margin: 0 0 10px 0;
+    color: #2ecc71;
+}
+
+.pack-card p {
+    margin: 5px 0;
+}
+
+.puzzle-count {
+    display: block;
+    margin-top: 10px;
+    color: #888;
 } 
