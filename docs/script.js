@@ -47,7 +47,7 @@ function showPuzzle() {
 
     // Update puzzle counter
     document.getElementById('puzzle-counter').textContent = 
-        `Puzzle ${currentPuzzleIndex + 1} of ${puzzles.length}`;
+        `${currentPuzzleIndex + 1} of ${puzzles.length}`;
         
     // Save current position to localStorage using pack-specific key
     localStorage.setItem(storageKey, currentPuzzleIndex);
