@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2D Tactics - {PACK_NAME}</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="nav-header">
+            <a href="../index.html" class="back-button" title="Back to Packs">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M19 12H5M12 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+        </div>
+        <h2 class="pack-title">{PACK_NAME}</h2>
+        <div id="puzzle-container">
+            <iframe id="puzzle-frame" scrolling="no" style="aspect-ratio: 9/16; width: 100%;"></iframe>
+        </div>
+        <div class="controls">
+            <button class="button" id="prevButton" onclick="previousPuzzle()">Previous</button>
+            <div id="puzzle-counter">1 of 50</div>
+            <button class="button" id="nextButton" onclick="nextPuzzle()">Next</button>
+        </div>
+    </div>
+    <script>
+        const PUZZLE_PACK = '{PUZZLE_FILE}';
+    </script>
+    <script src="../script.js"></script>
+</body>
+</html> 
