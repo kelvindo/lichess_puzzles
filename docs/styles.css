@@ -25,11 +25,16 @@ h1 {
     width: 100%;
     max-width: 500px;
     margin: 10px auto;
+    position: relative;
+    padding-bottom: min(100%, 500px);
 }
 
 #board {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    aspect-ratio: 1;
+    height: 100%;
 }
 
 .secondary-controls {
