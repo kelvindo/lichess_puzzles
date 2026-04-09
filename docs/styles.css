@@ -21,11 +21,33 @@ h1 {
 }
 
 
-#puzzle-frame {
-    width: 600px;
-    height: 535px;
-    border: none;
-    margin: 20x;
+#board-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 10px auto;
+}
+
+#board {
+    width: 100%;
+    aspect-ratio: 1;
+}
+
+.secondary-controls {
+    margin-top: 10px;
+}
+
+.analyze-button,
+.reset-button {
+    padding: 10px 20px;
+    text-decoration: none;
+}
+
+.reset-button {
+    background-color: #e67e22;
+}
+
+.reset-button:hover {
+    background-color: #d35400;
 }
 
 

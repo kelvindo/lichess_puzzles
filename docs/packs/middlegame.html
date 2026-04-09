@@ -4,6 +4,9 @@
     <title>2D Tactics - Middlegame Tactics</title>
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@lichess-org/chessground/assets/chessground.base.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@lichess-org/chessground/assets/chessground.brown.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@lichess-org/chessground/assets/chessground.cburnett.css">
 </head>
 <body>
     <div class="container">
@@ -15,18 +18,22 @@
             </a>
         </div>
         <h2 class="pack-title">Middlegame Tactics</h2>
-        <div id="puzzle-container">
-            <iframe id="puzzle-frame" scrolling="no" style="aspect-ratio: 9/16; width: 100%;"></iframe>
+        <div id="board-container">
+            <div id="board"></div>
         </div>
         <div class="controls">
             <button class="button" id="prevButton" onclick="previousPuzzle()">Previous</button>
             <div id="puzzle-counter">1 of 50</div>
             <button class="button" id="nextButton" onclick="nextPuzzle()">Next</button>
         </div>
+        <div class="controls secondary-controls">
+            <button class="button reset-button" onclick="resetPosition()">Reset</button>
+            <a id="analyze-link" class="button analyze-button" target="_blank" rel="noopener">Analyze on Lichess</a>
+        </div>
     </div>
     <script>
         const PUZZLE_PACK = 'puzzles_Middlegame_n50_elo800-1600.csv';
     </script>
-    <script src="../script.js"></script>
+    <script type="module" src="../script.js"></script>
 </body>
-</html> 
+</html>
